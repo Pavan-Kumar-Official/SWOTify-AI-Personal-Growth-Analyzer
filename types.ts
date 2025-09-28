@@ -23,3 +23,10 @@ export interface SwotAnalysis extends SwotData {
 }
 
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
+
+export interface JobSuitabilityAnalysis {
+  suitabilityScore: number;
+  summary: string;
+  matchingSkills: string[];
+  missingSkills: string[];
+}

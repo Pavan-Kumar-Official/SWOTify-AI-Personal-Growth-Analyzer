@@ -1,6 +1,7 @@
 import React from 'react';
 import HeadlineAnalyzer from './components/HeadlineAnalyzer';
 import SwotAnalyzer from './components/SwotAnalyzer';
+import JobSuitabilityAnalyzer from './components/JobSuitabilityAnalyzer';
 
 const App: React.FC = () => {
   return (
@@ -22,9 +23,12 @@ const App: React.FC = () => {
           Harness the power of AI to refine your professional brand and uncover your unique career landscape.
         </p>
       </header>
-      <main className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-        <HeadlineAnalyzer />
-        <SwotAnalyzer />
+      <main className="max-w-7xl mx-auto flex flex-col gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <HeadlineAnalyzer />
+            <SwotAnalyzer />
+        </div>
+        <JobSuitabilityAnalyzer />
       </main>
       <footer className="text-center mt-12 text-slate-500 text-sm">
         <p>Powered by AI. Designed for career growth.</p>
