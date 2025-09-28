@@ -8,7 +8,7 @@ declare const pdfjsLib: any;
 let pdfWorkerInitialized = false;
 
 async function parsePdf(file: File): Promise<string> {
-    // Check if pdfjsLib is available on the window object. This is a fallback.
+    // Check if pdfjsLib is available.
     if (typeof pdfjsLib === 'undefined') {
         throw new Error('PDF parsing library failed to load. Please refresh the page and try again.');
     }
@@ -16,7 +16,6 @@ async function parsePdf(file: File): Promise<string> {
     // Lazily initialize the worker source. This runs only once.
     if (!pdfWorkerInitialized) {
         // Configure the worker for pdf.js. This is crucial for performance.
-        // Make sure the version matches the library version in index.html.
         pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js`;
         pdfWorkerInitialized = true;
     }
