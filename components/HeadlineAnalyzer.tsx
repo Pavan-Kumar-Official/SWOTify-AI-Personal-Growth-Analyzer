@@ -29,14 +29,24 @@ const HighlightedSuggestion: React.FC<{ text: string; keywords: string[] }> = ({
         return <>{text}</>;
     }
 
-    const regex = new RegExp(`(${keywords.join('|')})`, 'gi');
+    // Sort keywords by length descending to correctly handle cases where one keyword is a substring of another (e.g., "Engineer" vs "Software Engineer").
+    const sortedKeywords = [...keywords].sort((a, b) => b.length - a.length);
+    // Escape any special regex characters from the keywords.
+    const escapedKeywords = sortedKeywords.map(kw => kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+    if (escapedKeywords.length === 0) {
+        return <>{text}</>;
+    }
+
+    const regex = new RegExp(`(${escapedKeywords.join('|')})`, 'gi');
     const parts = text.split(regex);
 
     return (
         <>
             {parts.map((part, index) =>
-                keywords.some(keyword => keyword.toLowerCase() === part.toLowerCase()) ? (
-                    <strong key={index} className="text-cyan-300 bg-cyan-900/50 px-1 py-0.5 rounded-md">
+                // The regex is case-insensitive ('gi'), so we perform a case-insensitive check to see if the part is one of the keywords to be highlighted.
+                sortedKeywords.some(keyword => keyword.toLowerCase() === part.toLowerCase()) ? (
+                    <strong key={index} className="not-italic font-bold text-slate-900 bg-cyan-400 px-1.5 py-0.5 rounded-md mx-0.5">
                         {part}
                     </strong>
                 ) : (
